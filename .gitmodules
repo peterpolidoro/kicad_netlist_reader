@@ -1,0 +1,3 @@
+[submodule "kicad-source-mirror"]
+	path = kicad-source-mirror
+	url = https://github.com/KiCad/kicad-source-mirror.git
