@@ -1,0 +1,1 @@
+../kicad-source-mirror/scripts/bom-in-python/kicad_netlist_reader.py
