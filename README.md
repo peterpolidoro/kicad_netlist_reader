@@ -7,7 +7,7 @@ original Kicad source file.
 
 Authors:
 
-    Jean-Pierre Charras jean-pierre.charras[at]gipsa-lab-dot-inpg-dot-fr
+    Jean-Pierre Charras <jean-pierre.charras[at]gipsa-lab-dot-inpg-dot-fr>
 
 Package Maintainers:
 
