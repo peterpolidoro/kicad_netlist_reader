@@ -21,7 +21,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/peterpolidoro/kicad_netlist_reader',
+    url='https://github.com/janelia-pypi/kicad_netlist_reader',
 
     # Author details
     author='Jean-Pierre Charras',
