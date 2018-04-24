@@ -25,7 +25,7 @@ setup(
 
     # Author details
     author='Jean-Pierre Charras',
-    author_email='jean-pierre.charras[at]gipsa-lab-dot-inpg-dot-fr',
+    author_email='jean-pierre.charras@gipsa-lab.inpg.fr',
 
     # Choose your license
     license='GPL',
