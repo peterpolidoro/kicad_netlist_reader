@@ -17,16 +17,16 @@
 ** Linux and Mac OS X
 
    #+BEGIN_SRC sh
-mkdir -p ~/virtualenvs/kicad
-virtualenv ~/virtualenvs/kicad
-source ~/virtualenvs/kicad/bin/activate
-pip install kicad_netlist_reader
+     mkdir -p ~/virtualenvs/kicad
+     virtualenv ~/virtualenvs/kicad
+     source ~/virtualenvs/kicad/bin/activate
+     pip install kicad_netlist_reader
    #+END_SRC
 
 ** Windows
 
    #+BEGIN_SRC sh
-virtualenv C:\virtualenvs\kicad
-C:\virtualenvs\kicad\Scripts\activate
-pip install kicad_netlist_reader
+     virtualenv C:\virtualenvs\kicad
+     C:\virtualenvs\kicad\Scripts\activate
+     pip install kicad_netlist_reader
    #+END_SRC
