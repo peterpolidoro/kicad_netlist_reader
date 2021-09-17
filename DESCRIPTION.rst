@@ -11,7 +11,7 @@ Authors:
 
 Package Maintainers:
 
-    Peter Polidoro <peterpolidoro@gmail.com>
+    Peter Polidoro <peter@polidoro.io>
 
 License:
 
