@@ -2,6 +2,8 @@
 # KiCad python module for interpreting generic netlists which can be used
 # to generate Bills of materials, etc.
 #
+# Remember these files use UTF8 encoding
+#
 # No string formatting is used on purpose as the only string formatting that
 # is current compatible with python 2.4+ to 3.0+ is the '%' method, and that
 # is due to be deprecated in 3.0+ soon
@@ -9,17 +11,17 @@
 
 """
     @package
-    Generate a HTML BOM list.
-    Components are sorted and grouped by value
-    Fields are (if exist)
-    Ref, Quantity, Value, Part, Datasheet, Description, Vendor
+    Helper module for interpreting generic netlist and build custom
+    bom generators or netlists in foreign format
 """
 
 
+from __future__ import print_function
 import sys
 import xml.sax as sax
 import re
 import pdb
+import string
 
 #-----<Configure>----------------------------------------------------------------
 
@@ -46,17 +48,17 @@ excluded_fields = [
 # regular expressions which match component 'Reference' fields of components that
 # are to be excluded from the BOM.
 excluded_references = [
-    # 'TP[0-9]+'              # all test points
+    'TP[0-9]+'              # all test points
     ]
 
 
 # regular expressions which match component 'Value' fields of components that
 # are to be excluded from the BOM.
 excluded_values = [
-    # 'MOUNTHOLE',
-    # 'SCOPETEST',
-    # 'MOUNT_HOLE',
-    # 'SOLDER_BRIDGE.*'
+    'MOUNTHOLE',
+    'SCOPETEST',
+    'MOUNT_HOLE',
+    'SOLDER_BRIDGE.*'
     ]
 
 
@@ -164,6 +166,7 @@ class xmlElement():
 
     def addAttribute(self, attr, value):
         """Add an attribute to this element"""
+        if type(value) != str: value = value.encode('utf-8')
         self.attributes[attr] = value
 
     def setAttribute(self, attr, value):
@@ -219,20 +222,31 @@ class xmlElement():
                 try:
                     if attrmatch != "":
                         if self.attributes[attribute] == attrmatch:
-                            return self.chars
+                            ret = self.chars
+                            if type(ret) != str: ret = ret.encode('utf-8')
+                            return ret
                     else:
-                        return self.attributes[attribute]
+                        ret = self.attributes[attribute]
+                        if type(ret) != str: ret = ret.encode('utf-8')
+                        return ret
                 except AttributeError:
-                    return ""
+                    ret = ""
+                    if type(ret) != str: ret = ret.encode('utf-8')
+                    return ret
             else:
-                return self.chars
+                ret = self.chars
+                if type(ret) != str: ret = ret.encode('utf-8')
+                return ret
 
         for child in self.children:
             ret = child.get(elemName, attribute, attrmatch)
             if ret != "":
+                if type(ret) != str: ret = ret.encode('utf-8')
                 return ret
 
-        return ""
+        ret = ""
+        if type(ret) != str: ret = ret.encode('utf-8')
+        return ret
 
 
 
@@ -305,11 +319,24 @@ class comp():
         self.grouped = False
 
     def __eq__(self, other):
-        """Equlivalency operator, remember this can be easily overloaded"""
+        """ Equivalency operator, remember this can be easily overloaded
+            2 components are equivalent ( i.e. can be grouped
+            if they have same value and same footprint
+
+            Override the component equivalence operator must be done before
+            loading the netlist, otherwise all components will have the original
+            equivalency operator.
+
+            You have to define a comparison module (for instance named myEqu)
+            and add the line;
+                kicad_netlist_reader.comp.__eq__ = myEqu
+            in your bom generator script before calling the netliste reader by something like:
+                net = kicad_netlist_reader.netlist(sys.argv[1])
+        """
         result = False
         if self.getValue() == other.getValue():
-            if self.getLibName() == other.getLibName():
-                if self.getPartName() == other.getPartName():
+            if self.getFootprint() == other.getFootprint():
+                if self.getRef().rstrip(string.digits) == other.getRef().rstrip(string.digits):
                     result = True
         return result
 
@@ -347,7 +374,7 @@ class comp():
         """
 
         field = self.element.get("field", "name", name)
-        if field == "" and libraryToo:
+        if field == "" and libraryToo and self.libpart:
             field = self.libpart.getField(name)
         return field
 
@@ -369,13 +396,13 @@ class comp():
 
     def getFootprint(self, libraryToo=True):
         ret = self.element.get("footprint")
-        if ret =="" and libraryToo:
+        if ret == "" and libraryToo and self.libpart:
             ret = self.libpart.getFootprint()
         return ret
 
     def getDatasheet(self, libraryToo=True):
         ret = self.element.get("datasheet")
-        if ret == '' and libraryToo:
+        if ret == "" and libraryToo and self.libpart:
             ret = self.libpart.getDatasheet()
         return ret
 
@@ -383,7 +410,7 @@ class comp():
         return self.element.get("tstamp")
 
     def getDescription(self):
-        return self.libpart.getDescription()
+        return self.element.get("libsource", "description")
 
 
 class netlist():
@@ -593,8 +620,14 @@ class netlist():
             if not exclude:
                 ret.append(c)
 
-        # Sort first by ref as this makes for easier to read BOM's
-        ret.sort(key=lambda g: g.getRef())
+        # The key to sort the components in the BOM
+        # This sorts using a natural sorting order (e.g. 100 after 99), and if it wasn't used
+        # the normal sort would place 100 before 99 since it only would look at the first digit.
+        def sortKey( str ):
+            return [ int(t) if t.isdigit() else t.lower()
+                    for t in re.split( '(\d+)', str ) ]
+
+        ret.sort(key=lambda g: sortKey(g.getRef()))
 
         return ret
 
@@ -633,13 +666,19 @@ class netlist():
                 # Add the new component group to the groups list
                 groups.append(newgroup)
 
-        # Each group is a list of components, we need to sort each list first
-        # to get them in order as this makes for easier to read BOM's
+        # The key to sort the components in the BOM
+        # This sorts using a natural sorting order (e.g. 100 after 99), and if it wasn't used
+        # the normal sort would place 100 before 99 since it only would look at the first digit.
+        def sortKey( str ):
+            return [ int(t) if t.isdigit() else t.lower()
+                    for t in re.split( '(\d+)', str ) ]
+
         for g in groups:
-            g = sorted(g, key=lambda g: g.getRef())
+            #g = sorted(g, key=lambda g: sortKey(g.getRef()))
+            g.sort(key=lambda g: sortKey(g.getRef()))
 
         # Finally, sort the groups to order the references alphabetically
-        groups = sorted(groups, key=lambda group: group[0].getRef())
+        groups.sort(key=lambda group: sortKey(group[0].getRef()))
 
         return groups
 
@@ -652,7 +691,12 @@ class netlist():
             ret = c.getField(field, False)
             if ret != '':
                 return ret
-        return group[0].getLibPart().getField(field)
+
+        libpart = group[0].getLibPart()
+        if not libpart:
+            return ''
+
+        return libpart.getField(field)
 
     def getGroupFootprint(self, group):
         """Return the whatever is known about the Footprint by consulting each

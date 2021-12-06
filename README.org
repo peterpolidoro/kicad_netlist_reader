@@ -4,33 +4,36 @@
 
 * Package Information
   - Name :: kicad_netlist_reader
-  - Version :: 1.1.4
+  - Version :: 5.1.10
   - License :: BSD
   - URL :: https://github.com/janelia-pypi/kicad_netlist_reader
   - Author :: Peter Polidoro
   - Email :: peter@polidoro.io
 
-  KiCad python module for interpreting generic netlists which can be
-  used to generate Bills of materials, etc. Simple repackaging of the
-  original Kicad source file. Based on some code by Jean-Pierre Charras.
+    KiCad python module for interpreting generic netlists which can be
+    used to generate Bills of materials, etc. Simple repackaging of the
+    original Kicad source file. Based on some code by Jean-Pierre Charras.
 
 * Installation
 
-  [[https://github.com/janelia-pypi/python_setup]]
+[[https://github.com/janelia-pypi/python_setup]]
 
 ** Linux and Mac OS X
 
-   #+BEGIN_SRC sh
-     mkdir -p ~/virtualenvs/kicad
-     virtualenv ~/virtualenvs/kicad
-     source ~/virtualenvs/kicad/bin/activate
-     pip install kicad_netlist_reader
-   #+END_SRC
+#+BEGIN_SRC sh
+
+python3 -m venv ~/venvs/kicad_netlist_reader
+source ~/venvs/kicad_netlist_reader/bin/activate
+pip install kicad_netlist_reader
+
+#+END_SRC
 
 ** Windows
 
-   #+BEGIN_SRC sh
-     virtualenv C:\virtualenvs\kicad
-     C:\virtualenvs\kicad\Scripts\activate
-     pip install kicad_netlist_reader
-   #+END_SRC
+#+BEGIN_SRC sh
+
+python3 -m venv C:\venvs\kicad_netlist_reader
+C:\venvs\kicad_netlist_reader\Scripts\activate
+pip install kicad_netlist_reader
+
+#+END_SRC
