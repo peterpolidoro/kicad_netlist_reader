@@ -46,3 +46,4 @@ RELEASE-VERSION
 .eggs/
 
 wheelhouse/
+venv/

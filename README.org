@@ -37,3 +37,18 @@ C:\venvs\kicad_netlist_reader\Scripts\activate
 pip install kicad_netlist_reader
 
 #+END_SRC
+
+* Development
+
+** Guix
+
+#+BEGIN_SRC sh
+
+guix time-machine -C channels.scm -- shell -m manifest.scm
+python3 -m venv venv
+source venv/bin/activate
+python setup.py install
+python setup.py sdist bdist_wheel
+twine upload dist/*
+
+#+END_SRC

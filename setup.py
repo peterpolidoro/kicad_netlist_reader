@@ -37,7 +37,7 @@ setuptools.setup(
 
     keywords='kicad netlist',
 
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    packages=setuptools.find_packages(exclude=['contrib', 'docs', 'tests*']),
 
     install_requires=[
     ],
