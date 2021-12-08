@@ -13,13 +13,13 @@
 (define-public python-kicad-netlist-reader
   (package
     (name "python-kicad-netlist-reader")
-    (version "1.1.4")
+    (version "5.1.10")
     (source (local-file %source-dir
                         #:recursive? #t
                         #:select? (git-predicate %source-dir)))
     (build-system python-build-system)
     (native-inputs
-     `(("python-setuptools-scm" ,python-setuptools-scm)))
+     `(("python-setuptools-scm-git-archive" ,python-setuptools-scm-git-archive)))
     (home-page "https://github.com/janelia-pypi/kicad_netlist_reader")
     (synopsis "KiCad python module for interpreting generic netlists.")
     (description "KiCad python module for interpreting generic netlists.")
