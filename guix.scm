@@ -2,7 +2,7 @@
  (guix packages)
  (guix git-download)
  (guix gexp)
- (guix licenses)
+ ((guix licenses) #:prefix license:)
  (guix build-system python)
  (gnu packages python-build)
  (gnu packages python-xyz))
@@ -12,7 +12,7 @@
 (define-public python-kicad-netlist-reader
   (package
     (name "python-kicad-netlist-reader")
-    (version "5.1.10")
+    (version "dev")
     (source (local-file %source-dir
                         #:recursive? #t
                         #:select? (git-predicate %source-dir)))
@@ -24,6 +24,6 @@
     (home-page "https://github.com/janelia-pypi/kicad_netlist_reader")
     (synopsis "KiCad python module for interpreting generic netlists.")
     (description "KiCad python module for interpreting generic netlists.")
-    (license gpl2)))
+    (license license:gpl3+)))
 
 python-kicad-netlist-reader

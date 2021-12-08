@@ -47,5 +47,6 @@ pip install kicad_netlist_reader
 guix time-machine -C channels.scm -- shell -D -f guix.scm
 python3 setup.py sdist bdist_wheel
 twine upload dist/*
+git clean -xdf
 
 #+END_SRC
