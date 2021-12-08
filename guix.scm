@@ -9,9 +9,9 @@
 
 (define %source-dir (dirname (current-filename)))
 
-(define-public python-kicad-netlist-reader
+(define-public python-dev-package
   (package
-    (name "python-kicad-netlist-reader")
+    (name "python-dev-package")
     (version "dev")
     (source (local-file %source-dir
                         #:recursive? #t
@@ -21,9 +21,9 @@
      `(("python-wheel" ,python-wheel)
        ("python-twine" ,python-twine)
        ("python-ipython" ,python-ipython)))
-    (home-page "https://github.com/janelia-pypi/kicad_netlist_reader")
-    (synopsis "KiCad python module for interpreting generic netlists.")
-    (description "KiCad python module for interpreting generic netlists.")
+    (home-page "")
+    (synopsis "")
+    (description "")
     (license license:gpl3+)))
 
-python-kicad-netlist-reader
+python-dev-package

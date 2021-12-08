@@ -4,7 +4,7 @@
 
 * Package Information
   - Name :: kicad_netlist_reader
-  - Version :: 5.1.10
+  - Version :: 5.1.11
   - License :: BSD
   - URL :: https://github.com/janelia-pypi/kicad_netlist_reader
   - Author :: Peter Polidoro
