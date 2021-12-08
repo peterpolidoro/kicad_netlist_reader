@@ -44,23 +44,7 @@ pip install kicad_netlist_reader
 
 #+BEGIN_SRC sh
 
-guix time-machine -C channels.scm -- shell -f guix.scm
-rm -rf venv
-python3 -m venv venv
-source venv/bin/activate
-python3 setup.py install
-python3 setup.py sdist bdist_wheel
-twine upload dist/*
-
-#+END_SRC
-
-#+BEGIN_SRC sh
-
-guix time-machine -C channels.scm -- shell -m manifest.scm
-rm -rf venv
-python3 -m venv venv
-source venv/bin/activate
-python3 setup.py install
+guix time-machine -C channels.scm -- shell -D -f guix.scm
 python3 setup.py sdist bdist_wheel
 twine upload dist/*
 
