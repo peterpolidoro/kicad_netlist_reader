@@ -11,7 +11,7 @@ with codecs.open(here.joinpath('DESCRIPTION.rst'), encoding='utf-8') as f:
 setuptools.setup(
     name='kicad_netlist_reader',
 
-    version = '5.1.11',
+    version = '5.1.12',
 
     description='KiCad python module for interpreting generic netlists.',
     long_description=long_description,
