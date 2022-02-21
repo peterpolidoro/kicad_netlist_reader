@@ -20,7 +20,6 @@ from __future__ import print_function
 import sys
 import xml.sax as sax
 import re
-import pdb
 import string
 
 #-----<Configure>----------------------------------------------------------------
