@@ -16,7 +16,7 @@
             "@type": "Person",
             "givenName": "Jean-Pierre",
             "familyName": "Charras",
-            "email": "jean-pierre.charras[at]wanadoo-dot-fr",
+            "email": "jean-pierre.charras@wanadoo.fr",
             "affiliation": {
                 "@type": "Organization",
                 "name": "KiCad"

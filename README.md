@@ -1,12 +1,12 @@
-- [About](#org0b9830c)
-- [Installation](#org3dcda82)
-- [Development](#orgdcd009e)
+- [About](#orgdd2d6e3)
+- [Installation](#orgae3ef0e)
+- [Development](#orgece32cf)
 
     <!-- This file is generated automatically from metadata -->
     <!-- File edits may be overwritten! -->
 
 
-<a id="org0b9830c"></a>
+<a id="orgdd2d6e3"></a>
 
 # About
 
@@ -20,14 +20,14 @@
 - License: GPL-3.0
 - URL: https://github.com/janelia-pypi/kicad_netlist_reader
 - Author: Jean-Pierre Charras
-- Email: jean-pierre.charras[at]wanadoo-dot-fr
+- Email: jean-pierre.charras@wanadoo.fr
 - Copyright: 2023 KiCad
 - References:
   - https://gitlab.com/kicad/code/kicad
 ```
 
 
-<a id="org3dcda82"></a>
+<a id="orgae3ef0e"></a>
 
 # Installation
 
@@ -76,7 +76,7 @@ The Python code in this library may be installed in any number of ways, chose on
     ```
 
 
-<a id="orgdcd009e"></a>
+<a id="orgece32cf"></a>
 
 # Development
 

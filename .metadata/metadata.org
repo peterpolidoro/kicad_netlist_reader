@@ -118,7 +118,7 @@ Charras
 
 #+NAME: email
 #+BEGIN_SRC text :exports none :noweb yes
-jean-pierre.charras[at]wanadoo-dot-fr
+jean-pierre.charras@wanadoo.fr
 #+END_SRC
 
 #+NAME: affiliation
