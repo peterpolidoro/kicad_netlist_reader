@@ -1,0 +1,26 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/GPL-3.0",
+    "codeRepository": "https://github.com/janelia-pypi/kicad_netlist_reader",
+    "dateCreated": "2014-12-09",
+    "dateModified": "2023-03-28",
+    "name": "kicad_netlist_reader",
+    "version": "7.0.1",
+    "description": "KiCad python module for interpreting generic netlists which can be used to generate bills of materials.",
+    "programmingLanguage": [
+        "Python 3"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Jean-Pierre",
+            "familyName": "Charras",
+            "email": "jean-pierre.charras[at]wanadoo-dot-fr",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "KiCad"
+            }
+        }
+    ]
+}

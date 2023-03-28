@@ -35,7 +35,7 @@ excluded_fields = [
     ]
 
 
-# You may exlude components from the BOM by either:
+# You may exclude components from the BOM by either:
 #
 # 1) adding a custom field named "Installed" to your components and filling it
 # with a value of "NU" (Normally Uninstalled).
@@ -47,17 +47,17 @@ excluded_fields = [
 # regular expressions which match component 'Reference' fields of components that
 # are to be excluded from the BOM.
 excluded_references = [
-    'TP[0-9]+'              # all test points
+    # 'TP[0-9]+'              # all test points
     ]
 
 
 # regular expressions which match component 'Value' fields of components that
 # are to be excluded from the BOM.
 excluded_values = [
-    'MOUNTHOLE',
-    'SCOPETEST',
-    'MOUNT_HOLE',
-    'SOLDER_BRIDGE.*'
+    # 'MOUNTHOLE',
+    # 'SCOPETEST',
+    # 'MOUNT_HOLE',
+    # 'SOLDER_BRIDGE.*'
     ]
 
 
@@ -72,7 +72,7 @@ excluded_footprints = [
 
 class xmlElement():
     """xml element which can represent all nodes of the netlist tree.  It can be
-    used to easily generate various output formats by propogating format
+    used to easily generate various output formats by propagating format
     requests to children recursively.
     """
     def __init__(self, name, parent=None):
@@ -285,6 +285,16 @@ class libpart():
                 fieldNames.append( f.get('field','name') )
         return fieldNames
 
+    def getPinList(self):
+        """Return a list of pins in play for this libpart.
+        """
+        pinList = []
+        pins = self.element.getChild('pins')
+        if pins:
+            for f in pins.getChildren():
+                pinList.append( f )
+        return pinList
+
     def getDatasheet(self):
         return self.getField("Datasheet")
 
@@ -320,7 +330,7 @@ class comp():
     def __eq__(self, other):
         """ Equivalency operator, remember this can be easily overloaded
             2 components are equivalent ( i.e. can be grouped
-            if they have same value and same footprint
+            if they have same value and same footprint and are both set to be populated
 
             Override the component equivalence operator must be done before
             loading the netlist, otherwise all components will have the original
@@ -336,7 +346,8 @@ class comp():
         if self.getValue() == other.getValue():
             if self.getFootprint() == other.getFootprint():
                 if self.getRef().rstrip(string.digits) == other.getRef().rstrip(string.digits):
-                    result = True
+                    if self.getDNP() == other.getDNP():
+                        result = True
         return result
 
     def setLibPart(self, part):
@@ -360,20 +371,21 @@ class comp():
     def getValue(self):
         return self.element.get("value")
 
-    def getField(self, name, libraryToo=True):
-        """Return the value of a field named name. The component is first
+    def getField(self, name, aLibraryToo = True):
+        """
+        Return the value of a field named name. The component is first
         checked for the field, and then the components library part is checked
         for the field. If the field doesn't exist in either, an empty string is
         returned
 
         Keywords:
         name -- The name of the field to return the value for
-        libraryToo --   look in the libpart's fields for the same name if not found
+        aLibraryToo --  look in the libpart's fields for the same name if not found
                         in component itself
         """
 
         field = self.element.get("field", "name", name)
-        if field == "" and libraryToo and self.libpart:
+        if field == "" and aLibraryToo and self.libpart:
             field = self.libpart.getField(name)
         return field
 
@@ -393,23 +405,124 @@ class comp():
     def getRef(self):
         return self.element.get("comp", "ref")
 
-    def getFootprint(self, libraryToo=True):
+    '''
+    Return true if the component has the DNP property set
+    '''
+    def getDNP(self):
+        for child in self.element.getChildren( "property"):
+            try:
+                if child.attributes['name'] == 'dnp':
+                    return True
+            except KeyError:
+                continue
+
+        return False
+
+    '''
+    Return 'DNP' if the component has the DNP property set
+    '''
+    def getDNPString(self):
+        if self.getDNP():
+            return 'DNP'
+
+        return ''
+
+    '''
+    Return true if the component has the exclude from BOM property set
+    '''
+    def getExcludeFromBOM(self):
+        for child in self.element.getChildren( "property"):
+            try:
+                if child.attributes['name'] == 'exclude_from_bom':
+                    return True
+            except KeyError:
+                continue
+
+        return False
+
+    '''
+    Return true if the component has the exclude from Board property set
+    '''
+    def getExcludeFromBoard(self):
+        for child in self.element.getChildren( "property"):
+            try:
+                if child.attributes['name'] == 'exclude_from_board':
+                    return True
+            except KeyError:
+                continue
+
+        return False
+
+    '''
+    return the footprint name. if empty and aLibraryToo = True, return the
+    footprint name from libary
+    '''
+    def getFootprint(self, aLibraryToo = True):
         ret = self.element.get("footprint")
-        if ret == "" and libraryToo and self.libpart:
+
+        if ret == "" and aLibraryToo and self.libpart:
             ret = self.libpart.getFootprint()
+
         return ret
 
-    def getDatasheet(self, libraryToo=True):
+    '''
+    return the datasheet name. if empty and aLibraryToo = True, return the
+    datasheet name from libary
+    '''
+    def getDatasheet(self, aLibraryToo = True):
         ret = self.element.get("datasheet")
-        if ret == "" and libraryToo and self.libpart:
+        if ret == "" and aLibraryToo and self.libpart:
             ret = self.libpart.getDatasheet()
         return ret
 
     def getTimestamp(self):
-        return self.element.get("tstamp")
+        """
+        Kicad 5 uses tstamp keyword for time stamp (8 digits) as UUID
+        Kicad 6 uses tstamps keyword for UUID and a multi unit symbol has more than one UUID
+        (UUIDs are separated by spaces)
+        """
+        ret = self.element.get("tstamp")
+        if ret == "":
+            ret = self.element.get("tstamps")
+        return ret
 
     def getDescription(self):
         return self.element.get("libsource", "description")
+
+    '''
+    return the netname of the pin aPinNum in netlist aNetlist
+    if aSkipEmptyNet = True, net having only one pin will return a empty name
+    '''
+    def getPinNetname(self, aPinNum, aNetlist, aSkipEmptyNet):
+        ref = self.getRef()
+
+        for net in aNetlist.nets:
+            net_name = net.get( "net", "name" )
+
+            item_cnt = 1
+            netitems = net.children
+
+            for node in netitems:
+                curr_item_ref = node.get( "node", "ref" )
+
+                if curr_item_ref == ref:
+                    curr_pin = node.get( "node", "pin" )
+
+                    if aPinNum == curr_pin:
+                        if aSkipEmptyNet:   #ensure at least 2 pins are in net
+                            pin_count = 0
+
+                            for curr_node in netitems:
+                                pin_count += 1
+
+                                if pin_count > 1:
+                                    return net_name
+
+                            return ""
+                        else:
+                            return net_name
+
+        return "?"
 
 
 class netlist():
@@ -436,7 +549,7 @@ class netlist():
 
         self._curr_element = None
 
-        # component blacklist regexs, made from exluded_* above.
+        # component blacklist regexs, made from excluded_* above.
         self.excluded_references = []
         self.excluded_values = []
         self.excluded_footprints = []
@@ -450,7 +563,7 @@ class netlist():
 
     def addElement(self, name):
         """Add a new kicad generic element to the list"""
-        if self._curr_element == None:
+        if self._curr_element is None:
             self.tree = xmlElement(name)
             self._curr_element = self.tree
         else:
@@ -482,7 +595,7 @@ class netlist():
     def endDocument(self):
         """Called when the netlist document has been fully parsed"""
         # When the document is complete, the library parts must be linked to
-        # the components as they are seperate in the tree so as not to
+        # the components as they are separate in the tree so as not to
         # duplicate library part information for every component
         for c in self.components:
             for p in self.libparts:
@@ -521,6 +634,10 @@ class netlist():
     def getTool(self):
         """Return the tool string which was used to create the netlist tree"""
         return self.design.get("tool")
+
+    def getNets(self):
+        """Return the nets """
+        return self.nets
 
     def gatherComponentFieldUnion(self, components=None):
         """Gather the complete 'set' of unique component fields, fields found in any component.
@@ -565,12 +682,12 @@ class netlist():
 
         return ret       # this is a python 'set'
 
-    def getInterestingComponents(self):
+    def getInterestingComponents(self, excludeBOM=False, excludeBoard=False, DNP=False):
         """Return a subset of all components, those that should show up in the BOM.
         Omit those that should not, by consulting the blacklists:
         excluded_values, excluded_refs, and excluded_footprints, which hold one
-        or more regular expressions.  If any of the the regular expressions match
-        the corresponding field's value in a component, then the component is exluded.
+        or more regular expressions.  If any of the regular expressions match
+        the corresponding field's value in a component, then the component is excluded.
         """
 
         # pre-compile all the regex expressions:
@@ -598,23 +715,26 @@ class netlist():
                 for refs in self.excluded_references:
                     if refs.match(c.getRef()):
                         exclude = True
-                        break;
+                        break
             if not exclude:
                 for vals in self.excluded_values:
                     if vals.match(c.getValue()):
                         exclude = True
-                        break;
+                        break
             if not exclude:
                 for mods in self.excluded_footprints:
                     if mods.match(c.getFootprint()):
                         exclude = True
-                        break;
+                        break
 
-            if not exclude:
-                # This is a fairly personal way to flag DNS (Do Not Stuff).  NU for
-                # me means Normally Uninstalled.  You can 'or in' another expression here.
-                if c.getField( "Installed" ) == 'NU':
-                    exclude = True
+            if excludeBOM and c.getExcludeFromBOM():
+                exclude = True
+
+            if excludeBoard and c.getExcludeFromBoard():
+                exclude = True
+
+            if DNP and c.getDNP():
+                exclude = True
 
             if not exclude:
                 ret.append(c)

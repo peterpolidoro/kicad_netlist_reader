@@ -1,4 +1,533 @@
-GNU GENERAL PUBLIC LICENSE
+#+EXPORT_FILE_NAME: ../README.md
+#+OPTIONS: toc:1 |:t ^:nil tags:nil
+
+# Place warning at the top of the exported file
+#+BEGIN_EXAMPLE
+<!-- This file is generated automatically from metadata -->
+<!-- File edits may be overwritten! -->
+#+END_EXAMPLE
+
+* Project Specific Variables                                       :noexport:
+
+#+NAME: python-package-name
+#+BEGIN_SRC text :exports none :noweb yes
+kicad_netlist_reader
+#+END_SRC
+
+#+NAME: repository-name
+#+BEGIN_SRC text :exports none :noweb yes
+kicad_netlist_reader
+#+END_SRC
+
+#+NAME: guix-name
+#+BEGIN_SRC text :exports none :noweb yes
+python-kicad-netlist-reader
+#+END_SRC
+
+#+NAME: version
+#+BEGIN_SRC text :exports none :noweb yes
+7.0.1
+#+END_SRC
+
+#+NAME: description
+#+BEGIN_SRC text :exports none :noweb yes
+KiCad python module for interpreting generic netlists which can be used to generate bills of materials.
+#+END_SRC
+
+#+NAME: python-version
+#+BEGIN_SRC text :exports none :noweb yes
+3.9
+#+END_SRC
+
+#+NAME: references
+#+BEGIN_SRC text :exports none :noweb yes
+https://gitlab.com/kicad/code/kicad
+#+END_SRC
+
+#+NAME: creation-date
+#+BEGIN_SRC text :exports none :noweb yes
+2014-12-09
+#+END_SRC
+
+* General and Derived Variables                                    :noexport:
+
+#+NAME: release-month-day
+#+BEGIN_SRC emacs-lisp :exports none :noweb yes
+(format-time-string "%m-%d")
+#+END_SRC
+
+#+NAME: release-year
+#+BEGIN_SRC emacs-lisp :exports none :noweb yes
+(format-time-string "%Y")
+#+END_SRC
+
+#+NAME: release-date
+#+BEGIN_SRC text :exports none :noweb yes
+<<release-year()>>-<<release-month-day()>>
+#+END_SRC
+
+#+NAME: license
+#+BEGIN_SRC text :exports none :noweb yes
+GPL-3.0
+#+END_SRC
+
+#+NAME: guix-license
+#+BEGIN_SRC text :exports none :noweb yes
+license:gpl3+
+#+END_SRC
+
+#+NAME: license-files
+#+BEGIN_SRC text :exports none :noweb yes
+LICENSE
+#+END_SRC
+
+#+NAME: repository-organization
+#+BEGIN_SRC text :exports none :noweb yes
+janelia-pypi
+#+END_SRC
+
+#+NAME: forge
+#+BEGIN_SRC text :exports none :noweb yes
+github.com
+#+END_SRC
+
+#+NAME: repository-url
+#+BEGIN_SRC text :exports none :noweb yes
+https://<<forge>>/<<repository-organization>>/<<repository-name>>
+#+END_SRC
+
+#+NAME: git-clone-url-ssh
+#+BEGIN_SRC text :exports none :noweb yes
+git@<<forge>>:<<repository-organization>>/<<repository-name>>.git
+#+END_SRC
+
+#+NAME: author-given-name
+#+BEGIN_SRC text :exports none :noweb yes
+Jean-Pierre
+#+END_SRC
+
+#+NAME: author-family-name
+#+BEGIN_SRC text :exports none :noweb yes
+Charras
+#+END_SRC
+
+#+NAME: author
+#+BEGIN_SRC text :exports none :noweb yes
+<<author-given-name>> <<author-family-name>>
+#+END_SRC
+
+#+NAME: email
+#+BEGIN_SRC text :exports none :noweb yes
+jean-pierre.charras[at]wanadoo-dot-fr
+#+END_SRC
+
+#+NAME: affiliation
+#+BEGIN_SRC text :exports none :noweb yes
+KiCad
+#+END_SRC
+
+#+NAME: copyright
+#+BEGIN_SRC text :exports none :noweb yes
+<<release-year()>> <<affiliation>>
+#+END_SRC
+
+#+NAME: programming-language
+#+BEGIN_SRC text :exports none :noweb yes
+Python 3
+#+END_SRC
+
+* About
+
+#+BEGIN_SRC markdown :noweb yes
+- Python Package Name: <<python-package-name>>
+- Description: <<description>>
+- Version: <<version>>
+- Python Version: <<python-version>>
+- Release Date: <<release-date>>
+- Creation Date: <<creation-date>>
+- License: <<license>>
+- URL: <<repository-url>>
+- Author: <<author>>
+- Email: <<email>>
+- Copyright: <<copyright>>
+- References:
+  - <<references>>
+#+END_SRC
+
+* Installation
+
+[[https://github.com/janelia-pypi/python_setup]]
+
+** GNU/Linux
+
+*** Python Code
+
+The Python code in this library may be installed in any number of ways, chose one.
+
+**** pip
+
+#+BEGIN_SRC sh :noweb yes
+python3 -m venv ~/venvs/<<python-package-name>>
+source ~/venvs/<<python-package-name>>/bin/activate
+pip install <<python-package-name>>
+#+END_SRC
+
+**** guix
+
+Setup guix-janelia channel:
+
+https://github.com/guix-janelia/guix-janelia
+
+#+BEGIN_SRC sh :noweb yes
+guix install <<guix-name>>
+#+END_SRC
+
+** Windows
+
+*** Python Code
+
+The Python code in this library may be installed in any number of ways, chose one.
+
+**** pip
+
+#+BEGIN_SRC sh :noweb yes
+python3 -m venv C:\venvs\<<python-package-name>>
+C:\venvs\<<python-package-name>>\Scripts\activate
+pip install <<python-package-name>>
+#+END_SRC
+
+* Development
+
+** Clone Repository
+
+#+BEGIN_SRC sh :noweb yes
+git clone <<git-clone-url-ssh>>
+cd <<repository-name>>
+#+END_SRC
+
+** Guix
+
+*** Install Guix
+
+[[https://guix.gnu.org/manual/en/html_node/Binary-Installation.html][Install Guix]]
+
+*** Edit metadata.org
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile metadata-edits
+#+END_SRC
+
+*** Tangle metadata.org
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile metadata
+#+END_SRC
+
+*** Develop Python package
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile guix-dev-container
+exit
+#+END_SRC
+
+*** Test Python package using ipython shell
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile guix-dev-container-ipython
+import <<python-package-name>>
+exit
+#+END_SRC
+
+*** Test Python package installation
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile guix-container
+exit
+#+END_SRC
+
+*** Upload Python package to pypi
+
+#+BEGIN_SRC sh :noweb yes
+make -f .metadata/Makefile upload
+#+END_SRC
+
+* Tangled Files                                                    :noexport:
+
+#+BEGIN_SRC scheme :tangle guix/channels.scm :exports none :noweb yes
+;; This file is generated automatically from metadata
+;; File edits may be overwritten!
+(list (channel
+        (name 'guix)
+        (url "https://git.savannah.gnu.org/git/guix.git")
+        (branch "master")
+        (commit
+          "6d500ad544b2ca773b09001e16d38cb35ce9eb38")
+        (introduction
+          (make-channel-introduction
+            "9edb3f66fd807b096b48283debdcddccfea34bad"
+            (openpgp-fingerprint
+              "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA")))))
+#+END_SRC
+
+#+BEGIN_SRC scheme :tangle guix/guix.scm :exports none :noweb yes
+;; This file is generated automatically from metadata
+;; File edits may be overwritten!
+(use-modules
+ (guix packages)
+ (guix git-download)
+ (guix gexp)
+ ((guix licenses) #:prefix license:)
+ (guix build-system python)
+ (gnu packages base)
+ (gnu packages emacs)
+ (gnu packages emacs-xyz)
+ (gnu packages python-build)
+ (gnu packages python-xyz)
+ (gnu packages imagemagick)
+ (gnu packages version-control)
+ (gnu packages ncurses))
+
+(define %source-dir (dirname (dirname (dirname (current-filename)))))
+
+(define-public python-dev-package
+  (package
+    (name "python-dev-package")
+    (version "dev")
+    (source (local-file %source-dir
+                        #:recursive? #t
+                        #:select? (git-predicate %source-dir)))
+    (build-system python-build-system)
+    (native-inputs (list gnu-make
+                         git
+                         emacs
+                         emacs-org
+                         emacs-ox-gfm
+                         python-wheel
+                         python-twine
+                         python-virtualenv
+                         python-ipython
+                         imagemagick))
+    (propagated-inputs (list
+                        ncurses))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license <<guix-license>>)))
+
+python-dev-package
+#+END_SRC
+
+#+BEGIN_SRC text :tangle Makefile :exports none :noweb yes
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+
+.PHONY: upload
+upload: metadata package twine add clean
+
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR := $(notdir $(patsubst %/,%,$(dir $(MAKEFILE_PATH))))
+GUIX-TIME-MACHINE = guix time-machine -C $(MAKEFILE_DIR)/guix/channels.scm
+GUIX-SHELL = $(GUIX-TIME-MACHINE) -- shell -f $(MAKEFILE_DIR)/guix/guix.scm
+GUIX-DEV-SHELL = $(GUIX-TIME-MACHINE) -- shell -D -f $(MAKEFILE_DIR)/guix/guix.scm
+CONTAINER = --container --preserve='^DISPLAY$$' --preserve='^TERM$$'
+GUIX-CONTAINER = $(GUIX-SHELL) $(CONTAINER)
+GUIX-DEV-CONTAINER = $(GUIX-DEV-SHELL) $(CONTAINER)
+VENV-SHELL = rm -rf .venv && mkdir .venv && python3 -m venv .venv && source .venv/bin/activate
+
+.PHONY: guix-dev-container
+guix-dev-container:
+	$(GUIX-DEV-CONTAINER)
+
+.PHONY: guix-dev-container-ipython
+guix-dev-container-ipython:
+	$(GUIX-DEV-CONTAINER) -- ipython --no-autoindent
+
+.PHONY: guix-container
+guix-container:
+	$(GUIX-CONTAINER) python-ipython --rebuild-cache
+
+.PHONY: requirements.txt
+requirements.txt:
+	$(GUIX-DEV-CONTAINER) -- sh -c "$(VENV-SHELL) && pip freeze --local --exclude <<python-package-name>> > requirements.txt && deactivate && rm -rf .venv"
+
+.PHONY: metadata-edits
+metadata-edits:
+	$(GUIX-DEV-CONTAINER) -- sh -c "emacs -q --no-site-file --no-site-lisp --no-splash -l $(MAKEFILE_DIR)/emacs/init.el --file $(MAKEFILE_DIR)/metadata.org"
+
+.PHONY: metadata
+metadata:
+	$(GUIX-DEV-CONTAINER) -- sh -c "emacs --batch -Q  -l $(MAKEFILE_DIR)/emacs/init.el --eval '(process-org \"$(MAKEFILE_DIR)/metadata.org\")'"
+
+.PHONY: package
+package:
+	$(GUIX-DEV-CONTAINER) -- sh -c "python3 setup.py sdist bdist_wheel"
+
+.PHONY: twine
+twine:
+	$(GUIX-DEV-CONTAINER) --network --expose=$$HOME/.pypirc -- sh -c "twine upload dist/*"
+
+.PHONY: add
+add:
+	$(GUIX-DEV-CONTAINER) -- sh -c "git add --all"
+
+.PHONY: clean
+clean:
+	$(GUIX-DEV-CONTAINER) -- sh -c "git clean -xdf"
+
+#+END_SRC
+
+#+BEGIN_SRC scheme :tangle emacs/init.el :exports none :noweb yes
+;; This file is generated automatically from metadata
+;; File edits may be overwritten!
+(require 'org)
+(require 'ox-org)
+
+(eval-after-load "org"
+  '(require 'ox-gfm nil t))
+
+(setq make-backup-files nil)
+(setq org-confirm-babel-evaluate nil)
+
+(setq python-indent-guess-indent-offset t)
+(setq python-indent-guess-indent-offset-verbose nil)
+
+(defun tangle-org (org-file)
+  "Tangle org file"
+  (unless (string= "org" (file-name-extension org-file))
+    (error "INFILE must be an org file."))
+  (org-babel-tangle-file org-file))
+
+(defun export-org-to-markdown (org-file)
+  "Export org file to gfm file"
+  (unless (string= "org" (file-name-extension org-file))
+    (error "INFILE must be an org file."))
+  (let ((org-file-buffer (find-file-noselect org-file)))
+    (with-current-buffer org-file-buffer
+      (org-open-file (org-gfm-export-to-markdown)))))
+
+(defun process-org (org-file)
+  "Tangle and export org file"
+  (progn (tangle-org org-file)
+         (export-org-to-markdown org-file)))
+
+(setq enable-local-variables nil)
+(setq tangle-external-files t)
+(setq python-package-dir (concat "../" "<<python-package-name>>"))
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../AUTHORS" "no")
+#+BEGIN_SRC text :exports none :noweb yes
+<<author>>
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../codemeta.json" "no")
+#+BEGIN_SRC js :exports none :noweb yes
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/<<license>>",
+    "codeRepository": "<<repository-url>>",
+    "dateCreated": "<<creation-date>>",
+    "dateModified": "<<release-date>>",
+    "name": "<<python-package-name>>",
+    "version": "<<version>>",
+    "description": "<<description>>",
+    "programmingLanguage": [
+        "<<programming-language>>"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "<<author-given-name>>",
+            "familyName": "<<author-family-name>>",
+            "email": "<<email>>",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "<<affiliation>>"
+            }
+        }
+    ]
+}
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../pyproject.toml" "no")
+#+BEGIN_SRC text :exports none :noweb yes
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+[build-system]
+requires = ["setuptools"]
+build-backed = "setuptools.build_meta"
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../setup.cfg" "no")
+#+BEGIN_SRC text :exports none :noweb yes
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+[metadata]
+name = <<python-package-name>>
+version = <<version>>
+author = <<author>>
+author_email = <<email>>
+url = <<repository-url>>
+description = <<description>>
+long_description = file: README.md
+long_description_content_type = text/markdown
+license = <<license>>
+license_files = <<license-files>>
+classifiers =
+    Programming Language :: Python :: 3
+
+[options]
+packages = find:
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../setup.py" "no")
+#+BEGIN_SRC python :exports none :noweb yes
+"""<<description>>"""
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+from setuptools import setup
+
+
+if __name__ == '__main__':
+    setup()
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files  (concat python-package-dir "/__about__.py") "no")
+#+BEGIN_SRC python :exports none :noweb yes
+"""<<description>>"""
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+
+__version__ = '<<version>>'
+__description__ = '<<description>>'
+__license__ = '<<license>>'
+__url__ = '<<repository-url>>'
+__author__ = '<<author>>'
+__email__ = '<<email>>'
+__copyright__ = '<<copyright>>'
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files (concat python-package-dir "/__init__.py") "no")
+#+BEGIN_SRC python :exports none :noweb yes
+"""<<description>>"""
+# This file is generated automatically from metadata
+# File edits may be overwritten!
+from <<python-package-name>>.__about__ import (
+    __author__,
+    __copyright__,
+    __email__,
+    __license__,
+    __description__,
+    __url__,
+    __version__)
+
+from .<<python-package-name>> import netlist, comp, xmlElement, libpart
+#+END_SRC
+
+#+NAME: license-text
+#+BEGIN_SRC text :exports none :noweb yes
+                    GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
@@ -632,7 +1161,7 @@ state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
     <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) (format-time-string "%Y")  Jean-Pierre Charras
+    Copyright (C) <<release-year>>  <<author>>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -652,7 +1181,7 @@ Also add information on how to contact you by electronic and paper mail.
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
 
-    <program>  Copyright (C) (format-time-string "%Y")  Jean-Pierre Charras
+    <program>  Copyright (C) <<release-year>>  <<author>>
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it
     under certain conditions; type `show c' for details.
@@ -672,3 +1201,20 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
+#+END_SRC
+
+#+BEGIN_SRC text :tangle LICENSE :exports none :noweb yes
+<<license-text>>
+#+END_SRC
+
+#+HEADER: :tangle (if tangle-external-files "../LICENSE" "no")
+#+BEGIN_SRC text :exports none :noweb yes
+<<license-text>>
+#+END_SRC
+
+;; Local Variables:
+;; eval: (setq after-save-hook nil)
+;; eval: (setq org-confirm-babel-evaluate nil)
+;; eval: (setq tangle-external-files nil)
+;; eval: (setq python-package-dir "")
+;; End:
