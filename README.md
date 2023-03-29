@@ -1,18 +1,19 @@
-- [About](#org2de0e0a)
-- [Installation](#org1514e8d)
-- [Development](#orgefe0ba1)
+- [About](#org73f7750)
+- [Installation](#orgab924e6)
+- [Development](#orgf293386)
 
     <!-- This file is generated automatically from metadata -->
     <!-- File edits may be overwritten! -->
 
 
-<a id="org2de0e0a"></a>
+<a id="org73f7750"></a>
 
 # About
 
 ```markdown
 - Python Package Name: kicad_netlist_reader
 - Description: KiCad python module for interpreting generic netlists which can be used to generate bills of materials.
+- Python Package Exports: netlist, comp, xmlElement, libpart
 - Version: 7.0.1
 - Python Version: 3.9
 - Release Date: 2023-03-29
@@ -27,7 +28,7 @@
 ```
 
 
-<a id="org1514e8d"></a>
+<a id="orgab924e6"></a>
 
 # Installation
 
@@ -76,7 +77,7 @@ The Python code in this library may be installed in any number of ways, chose on
     ```
 
 
-<a id="orgefe0ba1"></a>
+<a id="orgf293386"></a>
 
 # Development
 

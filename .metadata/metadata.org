@@ -146,6 +146,7 @@ Python 3
 #+BEGIN_SRC markdown :noweb yes
 - Python Package Name: <<python-package-name>>
 - Description: <<description>>
+- Python Package Exports: <<python-package-exports>>
 - Version: <<version>>
 - Python Version: <<python-version>>
 - Release Date: <<release-date>>
