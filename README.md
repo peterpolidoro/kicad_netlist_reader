@@ -1,12 +1,12 @@
-- [About](#org73f7750)
-- [Installation](#orgab924e6)
-- [Development](#orgf293386)
+- [About](#orgd6c7872)
+- [Installation](#orga7a8100)
+- [Development](#orgfbed139)
 
     <!-- This file is generated automatically from metadata -->
     <!-- File edits may be overwritten! -->
 
 
-<a id="org73f7750"></a>
+<a id="orgd6c7872"></a>
 
 # About
 
@@ -28,7 +28,7 @@
 ```
 
 
-<a id="orgab924e6"></a>
+<a id="orga7a8100"></a>
 
 # Installation
 
@@ -77,7 +77,7 @@ The Python code in this library may be installed in any number of ways, chose on
     ```
 
 
-<a id="orgf293386"></a>
+<a id="orgfbed139"></a>
 
 # Development
 
