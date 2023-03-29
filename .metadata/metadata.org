@@ -34,6 +34,11 @@ python-kicad-netlist-reader
 KiCad python module for interpreting generic netlists which can be used to generate bills of materials.
 #+END_SRC
 
+#+NAME: python-package-exports
+#+BEGIN_SRC text :exports none :noweb yes
+netlist, comp, xmlElement, libpart
+#+END_SRC
+
 #+NAME: python-version
 #+BEGIN_SRC text :exports none :noweb yes
 3.9
@@ -261,7 +266,7 @@ make -f .metadata/Makefile upload
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "6d500ad544b2ca773b09001e16d38cb35ce9eb38")
+          "a1d4e562f1061d3300ed9cb37e6a40bddccf0197")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -355,7 +360,7 @@ metadata-edits:
 	$(GUIX-DEV-CONTAINER) -- sh -c "emacs -q --no-site-file --no-site-lisp --no-splash -l $(MAKEFILE_DIR)/emacs/init.el --file $(MAKEFILE_DIR)/metadata.org"
 
 .PHONY: metadata
-metadata:
+metadata: requirements.txt
 	$(GUIX-DEV-CONTAINER) -- sh -c "emacs --batch -Q  -l $(MAKEFILE_DIR)/emacs/init.el --eval '(process-org \"$(MAKEFILE_DIR)/metadata.org\")'"
 
 .PHONY: package
@@ -522,7 +527,7 @@ from <<python-package-name>>.__about__ import (
     __url__,
     __version__)
 
-from .<<python-package-name>> import netlist, comp, xmlElement, libpart
+from .<<python-package-name>> import <<python-package-exports>>
 #+END_SRC
 
 #+NAME: license-text

@@ -1,12 +1,12 @@
-- [About](#orgdd2d6e3)
-- [Installation](#orgae3ef0e)
-- [Development](#orgece32cf)
+- [About](#org2de0e0a)
+- [Installation](#org1514e8d)
+- [Development](#orgefe0ba1)
 
     <!-- This file is generated automatically from metadata -->
     <!-- File edits may be overwritten! -->
 
 
-<a id="orgdd2d6e3"></a>
+<a id="org2de0e0a"></a>
 
 # About
 
@@ -15,7 +15,7 @@
 - Description: KiCad python module for interpreting generic netlists which can be used to generate bills of materials.
 - Version: 7.0.1
 - Python Version: 3.9
-- Release Date: 2023-03-28
+- Release Date: 2023-03-29
 - Creation Date: 2014-12-09
 - License: GPL-3.0
 - URL: https://github.com/janelia-pypi/kicad_netlist_reader
@@ -27,7 +27,7 @@
 ```
 
 
-<a id="orgae3ef0e"></a>
+<a id="org1514e8d"></a>
 
 # Installation
 
@@ -76,7 +76,7 @@ The Python code in this library may be installed in any number of ways, chose on
     ```
 
 
-<a id="orgece32cf"></a>
+<a id="orgefe0ba1"></a>
 
 # Development
 
