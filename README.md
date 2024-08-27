@@ -19,7 +19,7 @@
 - Release Date: 2023-03-29
 - Creation Date: 2014-12-09
 - License: GPL-3.0
-- URL: https://github.com/janelia-pypi/kicad_netlist_reader
+- URL: https://github.com/janelia-python/kicad_netlist_reader
 - Author: Jean-Pierre Charras
 - Email: jean-pierre.charras@wanadoo.fr
 - Copyright: 2023 KiCad
@@ -32,7 +32,7 @@
 
 # Installation
 
-<https://github.com/janelia-pypi/python_setup>
+<https://github.com/janelia-python/python_setup>
 
 
 ## GNU/Linux
@@ -85,7 +85,7 @@ The Python code in this library may be installed in any number of ways, chose on
 ## Clone Repository
 
 ```sh
-git clone git@github.com:janelia-pypi/kicad_netlist_reader.git
+git clone git@github.com:janelia-python/kicad_netlist_reader.git
 cd kicad_netlist_reader
 ```
 
